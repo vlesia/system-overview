@@ -1,7 +1,8 @@
-import { Component, ElementRef, viewChild, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, output, Output, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { ControlComponent } from '../../../shared/control/control.component';
 import { FormsModule } from '@angular/forms';
+import { TicketData } from '../../../models/ticket-data.model';
 
 @Component({
   selector: 'app-new-ticket',
@@ -13,9 +14,13 @@ import { FormsModule } from '@angular/forms';
 export class NewTicketComponent {
   // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+  // @Output() addTicket = new EventEmitter<TicketData>();
+  addTicket = output<TicketData>();
 
-  onSubmit() {
+
+  onSubmit(title: string, ticketText: string) {
     // this.form?.nativeElement.reset();
     this.form().nativeElement.reset();
+    this.addTicket.emit({title: title, text: ticketText});
   }
 }
