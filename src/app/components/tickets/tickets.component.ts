@@ -28,4 +28,12 @@ export class TicketsComponent {
     this.tickets.update((tickets) => [...tickets, ticket]);
     console.log(this.tickets);
   }
+
+  onCloseTicket(id: string) {
+    this.tickets.update((tickets) => {
+      return tickets.map((ticket) => {
+        return ticket.id === id ? { ...ticket, status: 'closed' } : ticket;
+      });
+    });
+  }
 }
