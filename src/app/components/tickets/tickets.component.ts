@@ -12,10 +12,10 @@ import { TicketComponent } from './ticket/ticket.component';
   styleUrl: './tickets.component.css',
 })
 export class TicketsComponent {
-  tickets: Ticket[] = [];
+  tickets = signal<Ticket[]>([]);
 
   getId() {
-    return (this.tickets.length + 1).toString();
+    return (this.tickets().length + 1).toString();
   }
 
   onAdd(ticketData: TicketData) {
@@ -25,7 +25,7 @@ export class TicketsComponent {
       request: ticketData.text,
       status: 'open',
     };
-    this.tickets.push(ticket);
+    this.tickets.update((tickets) => [...tickets, ticket]);
     console.log(this.tickets);
   }
 }
